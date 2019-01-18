@@ -1,4 +1,4 @@
-# A nice scripts to load a template for a ruby projects
+# A nice script to load a template for a ruby project
 
 It allows you to create :
 - A root directory
