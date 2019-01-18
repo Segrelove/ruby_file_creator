@@ -1,4 +1,5 @@
 require 'pry'
+require 'tty-prompt'
 
 def ruby_file_creator
     if ARGV.empty?
@@ -42,25 +43,32 @@ def ruby_file_creator
         gemfile.puts("gem 'pry'")
         gemfile.close
 
+        Dir.chdir "#{mkdir_name}"
+        system("bundle install")
+        sleep(0.2)
+
+        sleep(0.75)
+        system("rspec --init")
+        sleep(0.75)
+        prompt = TTY::Prompt.new
+        result = prompt.yes?('Do you want to git init?(Y/n)')
+        if result == true
+            system("git init")
+            sleep(0.2)
+            system("git add .")
+            sleep(0.2)
+            system('git commit -m "Structure"')
+            puts " "
+            puts "Now put your git@github.com:yourusername/yourrepository.git and push yourself"
+            puts " "
+        else
+        end
+        puts " "
         puts "Your new template is created, and located on "
+        puts " "
         puts "> #{mkdir_named_path}"
         exit
     end
 end
 
 ruby_file_creator
-
-## CODE I MIGHT KEEP FOR LATER
-# 
-# system("bundle install --#{mkdir_named_path}")
-# sleep(0.75)
-# system("rspec --init --#{mkdir_named_path}")
-# sleep(0.75)
-# system("git init")
-# sleep(0.75)
-# system("git add .")
-# sleep(0.75)
-# system('git commit -m "Structure"')
-# sleep(0.75)
-# system("git push")
-# puts "Everything went well !"
